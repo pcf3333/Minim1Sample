@@ -1,11 +1,17 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class pedidos {
+public class Pedido {
     private String nombre;
     private List<PL> liniaPedido = new ArrayList<>();
 
-    public pedidos(String nombre,PL pedido){
+    public Pedido(String nombre, List<PL> liniaPedido){
+        this.nombre=nombre;
+        this.liniaPedido=liniaPedido;
+    }
+
+    public String getNombre() {
+        return nombre;
     }
 
     private class PL{

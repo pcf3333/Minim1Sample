@@ -1,44 +1,44 @@
-import java.util.Comparator;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class ProductManagerImpl implements ProductManager {
 
-    private Queue<pedidos> Comandas;
-
+    private Queue<Pedido> Comandas;
     private List<Producte> productos;
+    private Map<String, Usuario> Usuarios = new HashMap();
 
     public List<Producte> productesOrdPreu() {
-        return productos.sort(CMP_PRIZE);
+        Collections.sort(productos, CMP_PRIZE);
+        return productos;
     }
 
-    public void AnotarComanda(Comanda c) {
 
+    public void AnotarComanda(Pedido p) {
+        this.Comandas.add(p);
     }
 
     public void servirComanda() {
-
+        Pedido p = this.Comandas.remove();
+        this.Usuarios.get(p.getNombre()).addPedido(p);
     }
 
-    public List<Comanda> comandesPerUsuari(String isUser) {
+    public List<Pedido> comandesPerUsuari(String isUser) {
         return null;
     }
 
     public List<Producte> productesOrdVentes() {
-        return productos.sort(new CompararVentas());
+        Collections.sort(productos, new CompararVentas());
+        return productos;
     }
 
     static class CompararPrecio implements Comparator<Producte> {
-        public int compare (Producte pr1, Producte pr2)
-        {
-            return Double.compare(pr1.getPrecio(),pr2.getPrecio());
+        public int compare(Producte pr1, Producte pr2) {
+            return Double.compare(pr1.getPrecio(), pr2.getPrecio());
         }
     }
 
     static class CompararVentas implements Comparator<Producte> {
-        public int compare (Producte pr1, Producte pr2)
-        {
-            return Double.compare(pr1.getVentas(),pr2.getVentas());
+        public int compare(Producte pr1, Producte pr2) {
+            return Double.compare(pr1.getVentas(), pr2.getVentas());
         }
     }
 

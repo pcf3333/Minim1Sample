@@ -1,8 +1,17 @@
+package com.Product;
+
 import java.util.Comparator;
 
-public abstract class Producte  {
-    public double precio;
-    public double ventas;
+public class Producte  {
+    private double precio;
+    private int ventas;
+    private String nombre;
+
+    public Producte(String n,double p, int v ){
+        this.precio=p;
+        this.ventas=v;
+        this.nombre=n;
+    }
 
     protected Comparator<Producte> CMP_PRIZE = new Comparator<Producte>() {
         public int compare(Producte p1, Producte p2) {
@@ -20,7 +29,15 @@ public abstract class Producte  {
         return precio;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
     public void setPrecio(double precio) {
         this.precio = precio;
+    }
+
+    public void incrCantidad(int c){
+        this.ventas+=c;
     }
 }

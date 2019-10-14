@@ -1,3 +1,5 @@
+package com.Product;
+
 import java.util.List;
 
 public interface ProductManager {

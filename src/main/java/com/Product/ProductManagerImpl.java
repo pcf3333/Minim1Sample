@@ -1,8 +1,10 @@
+package com.Product;
+
 import java.util.*;
 
 public class ProductManagerImpl implements ProductManager {
 
-    private Queue<Pedido> Comandas;
+    private Queue<Pedido> Comandas= new LinkedList<>();
     private List<Producte> productos;
     private Map<String, Usuario> Usuarios = new HashMap();
 
@@ -21,6 +23,10 @@ public class ProductManagerImpl implements ProductManager {
         this.Usuarios.get(p.getNombre()).addPedido(p);
     }
 
+    public Queue<Pedido> getComandas() {
+        return Comandas;
+    }
+
     public List<Pedido> comandesPerUsuari(String isUser) {
         return null;
     }
@@ -30,13 +36,13 @@ public class ProductManagerImpl implements ProductManager {
         return productos;
     }
 
-    static class CompararPrecio implements Comparator<Producte> {
+    public static class CompararPrecio implements Comparator<Producte> {
         public int compare(Producte pr1, Producte pr2) {
             return Double.compare(pr1.getPrecio(), pr2.getPrecio());
         }
     }
 
-    static class CompararVentas implements Comparator<Producte> {
+    public static class CompararVentas implements Comparator<Producte> {
         public int compare(Producte pr1, Producte pr2) {
             return Double.compare(pr1.getVentas(), pr2.getVentas());
         }
@@ -44,7 +50,7 @@ public class ProductManagerImpl implements ProductManager {
 
     private Comparator<Producte> CMP_PRIZE = new Comparator<Producte>() {
         public int compare(Producte p1, Producte p2) {
-            return (int) (p1.precio - p2.precio);
+            return (int) (p1.getPrecio() - p2.getPrecio());
         }
     };
 }

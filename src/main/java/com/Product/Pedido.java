@@ -1,13 +1,15 @@
+package com.Product;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Pedido {
     private String nombre;
     private List<PL> liniaPedido = new ArrayList<>();
 
-    public Pedido(String nombre, List<PL> liniaPedido){
+    public Pedido(String nombre){
         this.nombre=nombre;
-        this.liniaPedido=liniaPedido;
     }
 
     public String getNombre() {
@@ -22,6 +24,12 @@ public class Pedido {
             this.producte=producte;
             this.cantidad=cantidad;
         }
+    }
+
+    public void CreatePL(Producte producte, int cantidad, Map<String,Producte> m) {
+        liniaPedido.add(new PL(producte,cantidad));
+        m.get(producte.getNombre()).incrCantidad(cantidad);
+
     }
 
 }

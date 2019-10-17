@@ -14,4 +14,9 @@ public class Usuario {
     public void addPedido(Pedido p){
         this.ListaPedidos.add(p);
     }
+    public List<Pedido> getListaPedidos() {
+        return ListaPedidos;
+    }
+
+
 }

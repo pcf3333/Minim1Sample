@@ -4,17 +4,27 @@ import java.util.*;
 
 public class ProductManagerImpl implements ProductManager {
 
-    private Queue<Pedido> Comandas= new LinkedList<>();
-    private List<Producte> productos;
+    private Queue<Pedido> Comandas = new LinkedList<>();
+    private Map<String,Producte> listProductes = new HashMap();
     private Map<String, Usuario> Usuarios = new HashMap();
 
     public List<Producte> productesOrdPreu() {
-        Collections.sort(productos, CMP_PRIZE);
-        return productos;
+        List<Producte> lp=new ArrayList<>(listProductes.values());
+        Collections.sort(lp, CMP_PRIZE);
+        return lp;
     }
 
+    public List<Producte> productesOrdVentes() {
+        List<Producte> lp=new ArrayList<>(listProductes.values());
+        Collections.sort(lp, new CompararVentas());
+        return lp;
+    }
 
     public void AnotarComanda(Pedido p) {
+        if (!Usuarios.containsKey(p.getNombre())) {
+            Usuario user = new Usuario(p.getNombre());
+            Usuarios.put(p.getNombre(), user);
+        }
         this.Comandas.add(p);
     }
 
@@ -28,12 +38,7 @@ public class ProductManagerImpl implements ProductManager {
     }
 
     public List<Pedido> comandesPerUsuari(String isUser) {
-        return null;
-    }
-
-    public List<Producte> productesOrdVentes() {
-        Collections.sort(productos, new CompararVentas());
-        return productos;
+        return Usuarios.get(isUser).getListaPedidos();
     }
 
     public static class CompararPrecio implements Comparator<Producte> {
@@ -44,7 +49,7 @@ public class ProductManagerImpl implements ProductManager {
 
     public static class CompararVentas implements Comparator<Producte> {
         public int compare(Producte pr1, Producte pr2) {
-            return Double.compare(pr1.getVentas(), pr2.getVentas());
+            return -Double.compare(pr1.getVentas(), pr2.getVentas());
         }
     }
 
@@ -53,4 +58,9 @@ public class ProductManagerImpl implements ProductManager {
             return (int) (p1.getPrecio() - p2.getPrecio());
         }
     };
+
+    public void setListProductes(Map<String,Producte> listProductes) {
+        this.listProductes = listProductes;
+    }
 }
+
